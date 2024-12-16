@@ -2,6 +2,7 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { goodsBrandSlice, } from '@pages/goods-brand/slice';
+import { goodsListSlice, } from '@pages/goods-list/slice';
 
 
 import { quotesApiSlice } from "../features/quotes/quotesApiSlice"
@@ -10,6 +11,7 @@ import { quotesApiSlice } from "../features/quotes/quotesApiSlice"
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
 const rootReducer = combineSlices(
   goodsBrandSlice,
+  goodsListSlice,
   quotesApiSlice
 )
 // Infer the `RootState` type from the root reducer
