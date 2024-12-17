@@ -1,8 +1,7 @@
 import type React from "react"
 import { Layout, Menu, theme } from "antd"
 import { MENU_LIST } from "@utils/config"
-import { Route, Routes, useLocation } from "react-router"
-import { ROUTE_LIST } from "./router"
+import { Outlet, useLocation } from "react-router"
 import { useNavigate } from "react-router"
 import logo_png from "@assets/imgs/logo.png"
 import "./App.less"
@@ -44,17 +43,7 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Routes>
-              {ROUTE_LIST.map(item => {
-                return (
-                  <Route
-                    key={item?.path}
-                    path={item?.path}
-                    element={<item.element />}
-                  />
-                )
-              })}
-            </Routes>
+            <Outlet />
           </Layout.Content>
         </Layout>
       </Layout>

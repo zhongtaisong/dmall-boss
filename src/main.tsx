@@ -1,11 +1,12 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
-import { BrowserRouter } from "react-router"
+import { BrowserRouter, Route, Routes } from "react-router"
 import App from "./App"
 import { store } from "./app/store"
 import { ConfigProvider } from "antd"
 import zhCN from "antd/locale/zh_CN"
+import { ROUTE_LIST, ROUTE_LIST_PUBLIC } from "./router"
 import "./index.less"
 
 const container = document.getElementById("root")
@@ -18,7 +19,29 @@ if (container) {
       <Provider store={store}>
         <ConfigProvider locale={zhCN}>
           <BrowserRouter>
-            <App />
+            <Routes>
+              {ROUTE_LIST_PUBLIC.map(item => {
+                return (
+                  <Route
+                    key={item?.path}
+                    path={item?.path}
+                    element={<item.element />}
+                  />
+                )
+              })}
+              
+              <Route path="/" element={<App />}>
+                {ROUTE_LIST.map(item => {
+                  return (
+                    <Route
+                      key={item?.path}
+                      path={item?.path}
+                      element={<item.element />}
+                    />
+                  )
+                })}
+              </Route>
+            </Routes>
           </BrowserRouter>
         </ConfigProvider>
       </Provider>

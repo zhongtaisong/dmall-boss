@@ -4,6 +4,7 @@ import GoodsList from "./../pages/goods-list"
 import OrderList from "./../pages/order-list"
 import UserList from "./../pages/user-list"
 import PermissionList from "./../pages/permission-list"
+import Login from "./../pages/login"
 
 export const ROUTE_LIST = [
   {
@@ -41,5 +42,13 @@ export const ROUTE_LIST = [
     path: "/permission-list",
     element: PermissionList,
     isMenu: true,
+  },
+]
+
+export const ROUTE_LIST_PUBLIC = [
+  {
+    title: "登录",
+    path: "/login",
+    element: Login,
   },
 ]
