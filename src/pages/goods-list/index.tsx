@@ -104,7 +104,7 @@ const GoodsList: React.FC = () => {
   }
 
   return (
-    <div className="dm_goods_brand">
+    <div className="dm_goods_list">
       <Space direction="vertical" style={{ width: "100%" }} size={22}>
         <Form
           labelCol={{ span: 8 }}

@@ -22,6 +22,7 @@
     "js-md5": "^0.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-redux": "^9.1.0",
     "react-router": "^7.0.2"
   },
@@ -33,6 +34,7 @@
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.16",
     "@types/react-dom": "^18.2.18",
+    "@types/react-helmet": "^6.1.11",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

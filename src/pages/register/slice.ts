@@ -5,8 +5,8 @@ import type { ISliceState } from "./types";
 const initialState: ISliceState = {
 }
 
-export const loginSlice = createAppSlice({
-  name: "login",
+export const registerSlice = createAppSlice({
+  name: "register",
   initialState,
   reducers: create => ({
     onUpdateStateChange: create.reducer((state, action: PayloadAction<Array<{
@@ -33,6 +33,6 @@ export const loginSlice = createAppSlice({
 
 export const { 
     onUpdateStateChange,
-} = loginSlice.actions;
+} = registerSlice.actions;
 
-export const { getStateFn, } = loginSlice.selectors;
+export const { getStateFn, } = registerSlice.selectors;

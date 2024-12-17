@@ -1,7 +1,7 @@
 export interface ISliceState {
 };
 
-export interface ILoginUserParams {
+export interface IRegisterUserParams {
     phone: string;
     password: string;
 }

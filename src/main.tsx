@@ -7,6 +7,7 @@ import { store } from "./app/store"
 import { ConfigProvider } from "antd"
 import zhCN from "antd/locale/zh_CN"
 import { ROUTE_LIST, ROUTE_LIST_PUBLIC } from "./router"
+import { Helmet } from 'react-helmet';
 import "./index.less"
 
 const container = document.getElementById("root")
@@ -25,7 +26,15 @@ if (container) {
                   <Route
                     key={item?.path}
                     path={item?.path}
-                    element={<item.element />}
+                    element={
+                      <div>
+                        <Helmet>
+                          <title>{ item?.title }</title>
+                        </Helmet>
+
+                        <item.element />
+                      </div>
+                    }
                   />
                 )
               })}
@@ -36,7 +45,15 @@ if (container) {
                     <Route
                       key={item?.path}
                       path={item?.path}
-                      element={<item.element />}
+                      element={
+                        <div>
+                          <Helmet>
+                            <title>{ item?.title }</title>
+                          </Helmet>
+  
+                          <item.element />
+                        </div>
+                      }
                     />
                   )
                 })}

@@ -113,7 +113,6 @@ export default function FormModal(props: IProps) {
                   message: "请输入",
                 },
               ]}
-              // initialValue={modalInfo?.phone}
             >
               <Input.Password placeholder="请输入" readOnly={ Boolean(id) } />
             </Form.Item>

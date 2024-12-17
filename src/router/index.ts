@@ -5,6 +5,7 @@ import OrderList from "./../pages/order-list"
 import UserList from "./../pages/user-list"
 import PermissionList from "./../pages/permission-list"
 import Login from "./../pages/login"
+import Register from "./../pages/register"
 
 export const ROUTE_LIST = [
   {
@@ -50,5 +51,10 @@ export const ROUTE_LIST_PUBLIC = [
     title: "登录",
     path: "/login",
     element: Login,
+  },
+  {
+    title: "注册",
+    path: "/register",
+    element: Register,
   },
 ]
