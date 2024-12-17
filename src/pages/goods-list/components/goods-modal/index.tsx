@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@app/hooks"
 import { getStateFn, onToggleModalChange } from "@pages/goods-list/slice"
-import { Form, Input, InputNumber, Modal, } from "antd"
+import { Form, Input, InputNumber, Modal } from "antd"
 import DmUpload from "@components/dm-upload"
 import type { IAddGoodsParams } from "@pages/goods-list/types"
 import { useMemo } from "react"
@@ -59,7 +59,7 @@ export default function GoodsModal(props: IProps) {
                 .map(item => item?.response?.context?.[0] || item?.url || "")
                 .filter(Boolean)
             } else {
-              goods_imgs = ""
+              goods_imgs = []
             }
 
             Object.assign(values, {
@@ -140,6 +140,7 @@ export default function GoodsModal(props: IProps) {
         initialValue={goods_imgs_list}
       >
         <DmUpload
+          name="goodsImgs"
           isForm
           maxCount={6}
           fileList={goods_imgs_list}

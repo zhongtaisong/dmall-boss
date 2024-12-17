@@ -9,7 +9,6 @@ export interface ISliceState {
 export type IParams = IQueryGoodsListParams;
 export type IRow = IAddGoodsParams & {
     id: number;
-    goods_imgs: Array<string>;
 };
 
 export type IModalType = "isGoodsModalVisible";
@@ -24,7 +23,7 @@ export interface IAddGoodsParams {
     goods_name: string;
     goods_subtitle: string;
     goods_price: string | number;
-    goods_imgs: string;
+    goods_imgs: Array<string>;
 }
 
 export interface IUpdateGoodsParams extends IAddGoodsParams {

@@ -27,7 +27,6 @@ export default function DmUpload(props: IDmUploadProps) {
   return (
     <>
       <Upload
-        name="goodsImgs"
         listType="picture-card"
         action={`${SERVICE_URL}${action}`}
         accept=".png, .jpg, .jpeg"

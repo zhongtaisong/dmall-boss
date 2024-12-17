@@ -3,6 +3,7 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { goodsBrandSlice, } from '@pages/goods-brand/slice';
 import { goodsListSlice, } from '@pages/goods-list/slice';
+import { userListSlice, } from '@pages/user-list/slice';
 
 
 import { quotesApiSlice } from "../features/quotes/quotesApiSlice"
@@ -12,6 +13,7 @@ import { quotesApiSlice } from "../features/quotes/quotesApiSlice"
 const rootReducer = combineSlices(
   goodsBrandSlice,
   goodsListSlice,
+  userListSlice,
   quotesApiSlice
 )
 // Infer the `RootState` type from the root reducer
