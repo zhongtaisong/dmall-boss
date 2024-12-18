@@ -6,6 +6,7 @@ import UserList from "./../pages/user-list"
 import PermissionList from "./../pages/permission-list"
 import Login from "./../pages/login"
 import Register from "./../pages/register"
+import ChangePassword from "./../pages/change-password"
 
 export const ROUTE_LIST = [
   {
@@ -43,6 +44,11 @@ export const ROUTE_LIST = [
     path: "/permission-list",
     element: PermissionList,
     isMenu: true,
+  },
+  {
+    title: "修改密码",
+    path: "/change-password",
+    element: ChangePassword,
   },
 ]
 

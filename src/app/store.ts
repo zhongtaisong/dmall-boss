@@ -5,6 +5,7 @@ import { goodsBrandSlice, } from '@pages/goods-brand/slice';
 import { goodsListSlice, } from '@pages/goods-list/slice';
 import { userListSlice, } from '@pages/user-list/slice';
 import { loginSlice, } from '@pages/login/slice';
+import { homeSlice, } from '@pages/home/slice';
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
@@ -13,6 +14,7 @@ const rootReducer = combineSlices(
   goodsListSlice,
   userListSlice,
   loginSlice,
+  homeSlice,
 )
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>

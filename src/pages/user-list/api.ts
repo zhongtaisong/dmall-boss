@@ -129,11 +129,11 @@ export const updateUserReq = async (params: Partial<IUpdateUserParams>): Promise
 }
 
 /**
- * 更新
+ * 重置用户密码
  * @param id 
  * @returns 
  */
-export const updateUserResetPasswordReq = async (params: Partial<IUpdateUserParams>): Promise<string> => {
+export const resetUserPasswordReq = async (params: Partial<IUpdateUserParams>): Promise<string> => {
     let context = "";
     
     try {
@@ -146,7 +146,7 @@ export const updateUserResetPasswordReq = async (params: Partial<IUpdateUserPara
         }
     } catch (error) {
         createLogContentFn({
-            path: "updateUserResetPasswordReq",
+            path: "resetUserPasswordReq",
             error,
         });
     }

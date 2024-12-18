@@ -2,12 +2,12 @@ import { useEffect, useRef } from "react"
 import { Button, Form, Input, Space } from "antd"
 import { registerUserReq } from "./api"
 import background_png from "@assets/imgs/background.png"
-import { Link, useNavigate } from "react-router"
+import { Link, } from "react-router"
+import { onNavigateToLoginClick } from "@utils/common"
 import "./index.less"
 
 const Register: React.FC = () => {
   const isUseEffect = useRef(false)
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isUseEffect?.current) return
@@ -27,7 +27,7 @@ const Register: React.FC = () => {
     const result = await registerUserReq(values)
     if(!result) return;
 
-    navigate("/login");
+    onNavigateToLoginClick();
   }
 
   return (

@@ -15,11 +15,13 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@analytics/storage-utils": "^0.4.2",
     "@ant-design/icons": "^5.5.2",
     "@reduxjs/toolkit": "^2.0.1",
     "antd": "^5.22.4",
     "axios": "^1.7.9",
     "js-md5": "^0.8.3",
+    "mitt": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",

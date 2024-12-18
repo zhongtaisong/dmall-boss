@@ -12,10 +12,13 @@ import {
 import background_png from "@assets/imgs/background.png"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import "./index.less"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
+import { getItem, removeItem, setItem } from "@analytics/storage-utils"
+import { cache } from "@utils/cache"
 
 const Login: React.FC = () => {
   const isUseEffect = useRef(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isUseEffect?.current) return
@@ -23,14 +26,26 @@ const Login: React.FC = () => {
     isUseEffect.current = true
   })
 
+  const account = getItem(cache.LOGIN_ACCOUNT) || "";
+
   /**
    * 登录 - 操作
    * @param values 
    */
   const onLoginClick = async (values: IObject) => {
     if(!values || !Object.keys(values).length) return;
+    
+    const { remember, ...rest } = values;
+    if(remember) {
+      setItem(cache.LOGIN_ACCOUNT, values?.phone || "");
+    }else {
+      removeItem(cache.LOGIN_ACCOUNT);
+    }
 
-    const result = await loginUserReq(values);
+    const result = await loginUserReq(rest);
+    if(!result) return;
+
+    navigate(-1);
   }
 
   return (
@@ -42,7 +57,10 @@ const Login: React.FC = () => {
     >
       <div className="dm_login__body">
         <Form
-          initialValues={{ remember: true }}
+          initialValues={{ 
+            phone: account,
+            remember: true,
+          }}
           onFinish={(values) => onLoginClick?.(values)}
           autoComplete="off"
         >
@@ -74,8 +92,6 @@ const Login: React.FC = () => {
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>记住账号</Checkbox>
               </Form.Item>
-
-              <Link to="/register">忘记密码</Link>
             </Flex>
           </Form.Item>
 

@@ -8,7 +8,7 @@ import {
   deleteUserReq,
   queryUserListReq,
   updateUserReq,
-  updateUserResetPasswordReq,
+  resetUserPasswordReq,
 } from "./api"
 import { getStateFn, onToggleModalChange, onUpdateStateChange } from "./slice"
 import { useAppDispatch, useAppSelector } from "@app/hooks"
@@ -117,7 +117,7 @@ const UserList: React.FC = () => {
   const onResetPasswordClick = async (params: IObject) => {
     if(!params || !Object.keys(params).length) return;
 
-    const result = await updateUserResetPasswordReq(params);
+    const result = await resetUserPasswordReq(params);
     if(!result) return;
 
     Modal.info({
