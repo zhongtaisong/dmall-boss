@@ -27,7 +27,8 @@ export const createLogContentFn = (params: {
   })
 }
 
-interface IUserInfo {
+export interface IUserInfo {
+  id: number;
   phone: string
   nickname: string
   avatar: string

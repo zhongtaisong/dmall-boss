@@ -6,8 +6,12 @@ import { useNavigate } from "react-router"
 import { DownOutlined, UserOutlined } from "@ant-design/icons"
 import logo_png from "@assets/imgs/logo.png"
 import { getUserInfoFn, onEmitLogoutClick } from "@utils/common"
+import type { IUserInfo, } from "@utils/common"
 import "./App.less"
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { queryUserInfoReq } from "@pages/home/api"
+import { setItem } from "@analytics/storage-utils"
+import { cache } from "@utils/cache"
 
 const App: React.FC = () => {
   const {
@@ -15,7 +19,6 @@ const App: React.FC = () => {
   } = theme.useToken()
   const navigate = useNavigate()
   const location = useLocation()
-  const user_info = getUserInfoFn()
   const items = useMemo(() => {
     const list = [
       { key: "1", label: "退出登录" },
@@ -30,7 +33,34 @@ const App: React.FC = () => {
 
     return list;
   }, [location?.pathname])
+  const isUseEffect = useRef(false)
+  const [userInfo, setUserInfo] = useState<Partial<IUserInfo>>({});
 
+  useEffect(() => {
+    if (isUseEffect?.current) return
+
+    isUseEffect.current = true
+
+    /** 查询登录用户信息 - 操作 */
+    queryUserInfoFn()
+  }, [location?.pathname])
+
+  /**
+   * 查询登录用户信息 - 操作
+   * @returns
+   */
+  const queryUserInfoFn = async () => {
+    const result = await queryUserInfoReq()
+    const info = getUserInfoFn();
+    const user_info = {
+      ...info,
+      ...result,
+    }
+    setItem(cache.LOGIN_INFO, user_info);
+    setUserInfo(user_info);
+    isUseEffect.current = false
+  }
+  
   return (
     <div className="dmall_app">
       <Layout>
@@ -79,15 +109,15 @@ const App: React.FC = () => {
                 placement="topRight"
               >
                 <Space className="dmall_app__header--right__info">
-                  {user_info?.avatar ? (
+                  {userInfo?.avatar ? (
                     <Avatar
-                      src={<img src={user_info?.avatar} alt="avatar" />}
+                      src={<img src={userInfo?.avatar} alt="avatar" />}
                     />
                   ) : (
                     <Avatar icon={<UserOutlined />} />
                   )}
 
-                  <span>{user_info?.nickname || user_info?.phone}</span>
+                  <span>{userInfo?.nickname || userInfo?.phone}</span>
 
                   <DownOutlined style={{ fontSize: 12 }} />
                 </Space>

@@ -23,7 +23,7 @@ declare module '@analytics/storage-utils' {
     */
     export function setItem(
      key: string, 
-     value: string, 
+     value: string | IObject, 
      options?: StorageOptions
     ): SetItemResult;
  

@@ -1,31 +1,17 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, } from "react"
 import { Form, Input, Image } from "antd"
-import { queryUserInfoReq } from "./api"
+import { getUserInfoFn } from "@utils/common"
 import "./index.less"
 
 const Home: React.FC = () => {
-  const isUseEffect = useRef(false)
   const [form] = Form.useForm()
-  const [avatar, setAvatar] = useState("");
+  const user_info = getUserInfoFn()
+  const avatar = user_info?.avatar || "";
 
   useEffect(() => {
-    if (isUseEffect?.current) return
-
-    isUseEffect.current = true
-
-    /** 查询登录用户信息 - 操作 */
-    queryUserInfoFn()
-  })
-
-  /**
-   * 查询登录用户信息 - 操作
-   * @returns
-   */
-  const queryUserInfoFn = async () => {
-    const result = await queryUserInfoReq()
-    form.setFieldsValue({...result});
-    setAvatar(result?.avatar || "");
-  }
+    form.setFieldsValue({...user_info});
+  }, [form, user_info])
+  
 
   return (
     <div className="dm_change_password">
