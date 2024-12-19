@@ -10,6 +10,7 @@ const initialState: ISliceState = {
     },
     dataSource: [],
     total: 0,
+    dmActions: [],
 }
 
 export const goodsBrandSlice = createAppSlice({

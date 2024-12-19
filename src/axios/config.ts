@@ -9,4 +9,7 @@ export const SUCCESS_CODE = "DM000000";
 
 /** 服务端web服务url */
 export const SERVICE_URL = 'http://127.0.0.1:8000/api';
+
+/** 身份认证失败 - 响应码 */
+export const AUTH_CODE = "APP-ERR-000001";
     

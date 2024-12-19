@@ -2,6 +2,7 @@ export interface ISliceState {
     params: IQueryGoodsBrandListParams;
     dataSource: Array<IRow>;
     total: number;
+    dmActions: IDmActions;
 };
 
 export type IParams = IQueryGoodsBrandListParams;

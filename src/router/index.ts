@@ -1,9 +1,10 @@
 import Home from "./../pages/home"
 import GoodsBrand from "./../pages/goods-brand"
 import GoodsList from "./../pages/goods-list"
-import OrderList from "./../pages/order-list"
 import UserList from "./../pages/user-list"
-import PermissionList from "./../pages/permission-list"
+import Login from "./../pages/login"
+import Register from "./../pages/register"
+import ChangePassword from "./../pages/change-password"
 
 export const ROUTE_LIST = [
   {
@@ -25,21 +26,27 @@ export const ROUTE_LIST = [
     isMenu: true,
   },
   {
-    title: "订单列表",
-    path: "/order-list",
-    element: OrderList,
-    isMenu: true,
-  },
-  {
     title: "用户列表",
     path: "/user-list",
     element: UserList,
     isMenu: true,
   },
   {
-    title: "权限列表",
-    path: "/permission-list",
-    element: PermissionList,
-    isMenu: true,
+    title: "修改密码",
+    path: "/change-password",
+    element: ChangePassword,
+  },
+]
+
+export const ROUTE_LIST_PUBLIC = [
+  {
+    title: "登录",
+    path: "/login",
+    element: Login,
+  },
+  {
+    title: "注册",
+    path: "/register",
+    element: Register,
   },
 ]
