@@ -12,6 +12,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { queryUserInfoReq } from "@pages/home/api"
 import { setItem } from "@analytics/storage-utils"
 import { cache } from "@utils/cache"
+import { eventBus, } from "@utils/event-bus"
 
 const App: React.FC = () => {
   const {
@@ -44,6 +45,18 @@ const App: React.FC = () => {
     /** 查询登录用户信息 - 操作 */
     queryUserInfoFn()
   }, [location?.pathname])
+
+  useEffect(() => {
+    const onEventBusChange = () => {
+      /** 查询登录用户信息 - 操作 */
+      queryUserInfoFn()
+    };
+    eventBus.on("queryUserInfo", onEventBusChange);
+
+    return () => {
+      eventBus.off("queryUserInfo", onEventBusChange);
+    };
+  }, []);
 
   /**
    * 查询登录用户信息 - 操作

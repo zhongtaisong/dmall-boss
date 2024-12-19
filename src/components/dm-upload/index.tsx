@@ -1,7 +1,7 @@
 import { SERVICE_URL } from "@axios/config"
 import { Upload, Image, Space } from "antd"
 import type { GetProp, UploadFile, UploadProps } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { PlusOutlined } from "@ant-design/icons"
 import { getUserInfoFn } from "@utils/common"
 
@@ -25,6 +25,10 @@ export default function DmUpload(props: IDmUploadProps) {
   const [fileList, setFileList] = useState<UploadFile[]>(props?.fileList || [])
   const { maxCount = Infinity, isForm = true, action, ...restProps } = props
   const { token, } = getUserInfoFn() || {};
+
+  useEffect(() => {
+    setFileList(props?.fileList || []);
+  }, [props])
 
   return (
     <>

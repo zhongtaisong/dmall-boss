@@ -7,6 +7,7 @@ export interface IEventBus {
         options?: NavigateOptions;
         delta?: number;
     };
+    queryUserInfo: unknown;
 }
 
 // @ts-ignore
