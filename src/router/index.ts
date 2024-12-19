@@ -1,7 +1,6 @@
 import Home from "./../pages/home"
 import GoodsBrand from "./../pages/goods-brand"
 import GoodsList from "./../pages/goods-list"
-import OrderList from "./../pages/order-list"
 import UserList from "./../pages/user-list"
 import Login from "./../pages/login"
 import Register from "./../pages/register"
@@ -24,12 +23,6 @@ export const ROUTE_LIST = [
     title: "商品列表",
     path: "/goods-list",
     element: GoodsList,
-    isMenu: true,
-  },
-  {
-    title: "订单列表",
-    path: "/order-list",
-    element: OrderList,
     isMenu: true,
   },
   {
