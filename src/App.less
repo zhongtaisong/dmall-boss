@@ -18,6 +18,27 @@
     }
   }
 
+  &__header {
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &--left, &--right {
+      flex: 1;
+    }
+
+    &--left {}
+    &--right {
+      text-align: right;
+
+      &__info {
+        cursor: pointer;
+      }
+    }
+  }
+
   &__content {
     margin: 24px 16px;
     padding: 24px 12px;

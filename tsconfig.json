@@ -23,7 +23,8 @@
       "@app/*": ["src/app/*"],
       "@pages/*": ["src/pages/*"],
       "@axios": ["src/axios"],
-      "@axios/*": ["src/axios/*"]
+      "@axios/*": ["src/axios/*"],
+      "@components/*": ["src/components/*"]
     }
   },
   "references": [{ "path": "./tsconfig.node.json" }],
