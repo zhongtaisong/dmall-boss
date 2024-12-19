@@ -1,7 +1,14 @@
 import { useEffect, useRef } from "react"
-import { Button, Form, Input, Popconfirm, Space, Table, 
+import {
+  Button,
+  Form,
+  Input,
+  Popconfirm,
+  Space,
+  Table,
   Image,
   Modal,
+  Select,
 } from "antd"
 import {
   addUserReq,
@@ -16,13 +23,12 @@ import { PAGE_SIZE } from "@axios/config"
 import type { IAddUserParams, IParams, IRow } from "./types"
 import FormModal from "./components/form-modal"
 import "./index.less"
+import { queryRoleInfoFn, ROLE_LIST_ALL } from "@utils/config"
 
 const UserList: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { 
-    modalInfo, searchParams, 
-    dataSource, total, 
-  } = useAppSelector(getStateFn)
+  const { modalInfo, searchParams, dataSource, total, dmActions } =
+    useAppSelector(getStateFn)
   const isUseEffect = useRef(false)
 
   useEffect(() => {
@@ -58,6 +64,7 @@ const UserList: React.FC = () => {
         { key: "dataSource", value: list },
         { key: "total", value: result?.total ?? 0 },
         { key: "searchParams", value: params_new || {} },
+        { key: "dmActions", value: result?.actions || [] },
       ]),
     )
   }
@@ -111,29 +118,27 @@ const UserList: React.FC = () => {
 
   /**
    * 重置用户密码 - 操作
-   * @param params 
-   * @returns 
+   * @param params
+   * @returns
    */
   const onResetPasswordClick = async (params: IObject) => {
-    if(!params || !Object.keys(params).length) return;
+    if (!params || !Object.keys(params).length) return
 
-    const result = await resetUserPasswordReq(params);
-    if(!result) return;
+    const result = await resetUserPasswordReq(params)
+    if (!result) return
 
     Modal.info({
       title: "提示",
-      content: `重置后的用户密码为：${ result }`,
-    });
+      content: `重置后的用户密码为：${result}`,
+    })
   }
 
   return (
     <div className="dm_user_list">
       <Space direction="vertical" style={{ width: "100%" }} size={22}>
         <Form
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          autoComplete="off"
           layout="inline"
+          autoComplete="off"
           onFinish={values => {
             /** 查询列表 - 操作 */
             queryUserListFn({
@@ -144,6 +149,14 @@ const UserList: React.FC = () => {
         >
           <Form.Item label="手机号码" name="phone">
             <Input placeholder="请输入" />
+          </Form.Item>
+
+          <Form.Item label="角色" name="role" initialValue="">
+            <Select
+              placeholder="请选择"
+              options={[{ value: "", label: "全部" }, ...ROLE_LIST_ALL]}
+              style={{ width: 180 }}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -164,6 +177,7 @@ const UserList: React.FC = () => {
                 }),
               )
             }
+            disabled={!dmActions.includes("add")}
           >
             新增用户
           </Button>
@@ -205,11 +219,18 @@ const UserList: React.FC = () => {
           />
 
           <Table.Column
+            key="role"
+            title="角色"
+            dataIndex="role"
+            render={text => queryRoleInfoFn(text)?.label || "-"}
+          />
+
+          <Table.Column
             key="nickname"
             title="昵称"
             dataIndex="nickname"
             render={text => text || "-"}
-            width="30%"
+            width="20%"
           />
 
           <Table.Column
@@ -217,14 +238,12 @@ const UserList: React.FC = () => {
             title="头像"
             dataIndex="avatar"
             render={text => {
-              const url = text?.[0] || "";
-              if(!url) return "-";
+              const url = text?.[0] || ""
+              if (!url) return "-"
 
-              return (
-                <Image src={ url } />
-              );
+              return <Image src={url} />
             }}
-            width={ 100 }
+            width={100}
           />
 
           <Table.Column
@@ -232,6 +251,7 @@ const UserList: React.FC = () => {
             title="创建时间"
             dataIndex="createdAt"
             render={text => text || "-"}
+            width="10%"
           />
 
           <Table.Column
@@ -239,6 +259,7 @@ const UserList: React.FC = () => {
             title="更新时间"
             dataIndex="updatedAt"
             render={text => text || "-"}
+            width="10%"
           />
 
           <Table.Column
@@ -259,6 +280,7 @@ const UserList: React.FC = () => {
                         }),
                       )
                     }
+                    disabled={!dmActions?.includes?.("upate") || !row?.isAction}
                   >
                     编辑
                   </Button>
@@ -266,6 +288,9 @@ const UserList: React.FC = () => {
                   <Button
                     type="primary"
                     onClick={() => onResetPasswordClick(row)}
+                    disabled={
+                      !dmActions?.includes?.("reset_password") || !row?.isAction
+                    }
                   >
                     重置用户密码
                   </Button>
@@ -274,8 +299,17 @@ const UserList: React.FC = () => {
                     title="提示"
                     description="确定删除？"
                     onConfirm={() => onDeleteClick(row)}
+                    disabled={
+                      !dmActions?.includes?.("delete") || !row?.isAction
+                    }
                   >
-                    <Button>删除</Button>
+                    <Button
+                      disabled={
+                        !dmActions?.includes?.("delete") || !row?.isAction
+                      }
+                    >
+                      删除
+                    </Button>
                   </Popconfirm>
                 </Space>
               )

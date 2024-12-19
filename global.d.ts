@@ -14,4 +14,7 @@ declare interface IListResult<T = any> {
     content: Array<T>;
     total: number;
     totalPages: number;
+    actions: IDmActions;
 }
+
+declare type IDmActions = Array<"add" | "upate" | "delete" | "reset_password">;

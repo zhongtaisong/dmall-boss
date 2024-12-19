@@ -4,11 +4,13 @@ export interface ISliceState {
     total: number;
     isVisible: boolean;
     modalInfo: Partial<IRow>;
+    dmActions: IDmActions;
 };
 
 export type IParams = IQueryUserListParams;
 export type IRow = IAddUserParams & {
     id: number;
+    isAction: boolean;
 };
 
 export type IModalType = "isVisible";
@@ -16,6 +18,8 @@ export type IModalType = "isVisible";
 export interface IQueryUserListParams {
     pageNum: number;
     pageSize: number;
+    phone?: string;
+    role?: "0" | "1" | "2";
 }
 export type IQueryUserListResult = IListResult<IRow>;
 
@@ -24,6 +28,7 @@ export interface IAddUserParams {
     password: string;
     nickname: string;
     avatar: Array<string>;
+    role: "0" | "1" | "2";
 }
 
 export interface IUpdateUserParams extends IAddUserParams {

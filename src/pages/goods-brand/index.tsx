@@ -9,7 +9,7 @@ import "./index.less"
 
 const GoodsBrand: React.FC = () => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector(getStateFn);
+  const { dmActions, ...state } = useAppSelector(getStateFn);
   const isUseEffect = useRef(false);
   const [visible, setVisible] = useState<{
     value: boolean;
@@ -51,6 +51,7 @@ const GoodsBrand: React.FC = () => {
       { key: "dataSource", value: list, },
       { key: "total", value: result?.total ?? 0, },
       { key: "params", value: params_new || {}, },
+      { key: "dmActions", value: result?.actions || [] },
     ]));
   }
 
@@ -132,6 +133,7 @@ const GoodsBrand: React.FC = () => {
           <Button 
             type="primary"
             onClick={() => setVisible({ value: true, })}
+            disabled={ !dmActions.includes("add") }
           >新增品牌</Button>
         </Space>
 
@@ -197,13 +199,15 @@ const GoodsBrand: React.FC = () => {
                       value: true,
                       data: row,
                     })}
+                    disabled={!dmActions?.includes?.("upate")}
                   >编辑</Button>
                   <Popconfirm
                     title="提示"
                     description="确定删除？"
                     onConfirm={() => onDeleteClick(row)}
+                    disabled={!dmActions?.includes?.("delete")}
                   >
-                    <Button>删除</Button>
+                    <Button disabled={!dmActions?.includes?.("delete")}>删除</Button>
                   </Popconfirm>
                 </Space>
               )

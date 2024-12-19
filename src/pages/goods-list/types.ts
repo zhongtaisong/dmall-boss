@@ -4,6 +4,7 @@ export interface ISliceState {
     total: number;
     isGoodsModalVisible: boolean;
     modalInfo: Partial<IRow>;
+    dmActions: IDmActions;
 };
 
 export type IParams = IQueryGoodsListParams;

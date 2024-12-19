@@ -15,7 +15,7 @@ import "./index.less"
 
 const GoodsList: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { modalInfo, searchParams, dataSource, total } =
+  const { modalInfo, searchParams, dataSource, total, dmActions, } =
     useAppSelector(getStateFn)
   const isUseEffect = useRef(false)
 
@@ -52,6 +52,7 @@ const GoodsList: React.FC = () => {
         { key: "dataSource", value: list },
         { key: "total", value: result?.total ?? 0 },
         { key: "searchParams", value: params_new || {} },
+        { key: "dmActions", value: result?.actions || [] },
       ]),
     )
   }
@@ -141,6 +142,7 @@ const GoodsList: React.FC = () => {
                 }),
               )
             }
+            disabled={ !dmActions.includes("add") }
           >
             新增商品
           </Button>
@@ -223,6 +225,7 @@ const GoodsList: React.FC = () => {
                         }),
                       )
                     }
+                    disabled={!dmActions?.includes?.("upate")}
                   >
                     编辑
                   </Button>
@@ -230,8 +233,9 @@ const GoodsList: React.FC = () => {
                     title="提示"
                     description="确定删除？"
                     onConfirm={() => onDeleteClick(row)}
+                    disabled={!dmActions?.includes?.("delete")}
                   >
-                    <Button>删除</Button>
+                    <Button disabled={!dmActions?.includes?.("delete")}>删除</Button>
                   </Popconfirm>
                 </Space>
               )

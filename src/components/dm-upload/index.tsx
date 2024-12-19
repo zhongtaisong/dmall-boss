@@ -3,6 +3,7 @@ import { Upload, Image, Space } from "antd"
 import type { GetProp, UploadFile, UploadProps } from "antd"
 import { useState } from "react"
 import { PlusOutlined } from "@ant-design/icons"
+import { getUserInfoFn } from "@utils/common"
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0]
 
@@ -23,6 +24,7 @@ export default function DmUpload(props: IDmUploadProps) {
   const [previewImage, setPreviewImage] = useState("")
   const [fileList, setFileList] = useState<UploadFile[]>(props?.fileList || [])
   const { maxCount = Infinity, isForm = true, action, ...restProps } = props
+  const { token, } = getUserInfoFn() || {};
 
   return (
     <>
@@ -30,6 +32,9 @@ export default function DmUpload(props: IDmUploadProps) {
         listType="picture-card"
         action={`${SERVICE_URL}${action}`}
         accept=".png, .jpg, .jpeg"
+        headers={{
+          "Authorization": `Bearer ${token}`,
+        }}
         {...restProps}
         onPreview={async (file: UploadFile) => {
           if (!file.url && !file.preview) {

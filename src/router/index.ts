@@ -3,7 +3,6 @@ import GoodsBrand from "./../pages/goods-brand"
 import GoodsList from "./../pages/goods-list"
 import OrderList from "./../pages/order-list"
 import UserList from "./../pages/user-list"
-import PermissionList from "./../pages/permission-list"
 import Login from "./../pages/login"
 import Register from "./../pages/register"
 import ChangePassword from "./../pages/change-password"
@@ -37,12 +36,6 @@ export const ROUTE_LIST = [
     title: "用户列表",
     path: "/user-list",
     element: UserList,
-    isMenu: true,
-  },
-  {
-    title: "权限列表",
-    path: "/permission-list",
-    element: PermissionList,
     isMenu: true,
   },
   {

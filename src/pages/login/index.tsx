@@ -45,7 +45,7 @@ const Login: React.FC = () => {
     const result = await loginUserReq(rest);
     if(!result) return;
 
-    navigate(-1);
+    navigate("/");
   }
 
   return (

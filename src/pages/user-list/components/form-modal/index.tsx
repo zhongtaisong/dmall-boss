@@ -1,11 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@app/hooks"
 import { getStateFn, onToggleModalChange } from "@pages/user-list/slice"
-import { Form, Input, Modal } from "antd"
+import { Form, Input, Modal, Select } from "antd"
 import DmUpload from "@components/dm-upload"
 import type { IAddUserParams } from "@pages/user-list/types"
 import { useMemo } from "react"
 import type { UploadFile } from "antd"
 import { phoneReg } from "@utils/regular-expression"
+import { ROLE_LIST } from "@utils/config"
 
 interface IProps {
   onOKClick: (values: IAddUserParams) => void
@@ -101,46 +102,44 @@ export default function FormModal(props: IProps) {
         <Input placeholder="请输入" maxLength={11} readOnly={Boolean(id)} />
       </Form.Item>
 
-      {
-        !id ? (
-          <>
-            <Form.Item
-              label="密码"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "请输入",
-                },
-              ]}
-            >
-              <Input.Password placeholder="请输入" readOnly={ Boolean(id) } />
-            </Form.Item>
+      {!id ? (
+        <>
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "请输入",
+              },
+            ]}
+          >
+            <Input.Password placeholder="请输入" readOnly={Boolean(id)} />
+          </Form.Item>
 
-            <Form.Item
-              label="确认密码"
-              name="confirmPassword"
-              dependencies={["password"]}
-              rules={[
-                {
-                  required: true,
-                  message: "再次输入密码",
+          <Form.Item
+            label="确认密码"
+            name="confirmPassword"
+            dependencies={["password"]}
+            rules={[
+              {
+                required: true,
+                message: "再次输入密码",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(new Error("两次输入的密码不一致"))
                 },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve()
-                    }
-                    return Promise.reject(new Error("两次输入的密码不一致"))
-                  },
-                }),
-              ]}
-            >
-              <Input.Password placeholder="请输入" />
-            </Form.Item>
-          </>
-        ) : null
-      }
+              }),
+            ]}
+          >
+            <Input.Password placeholder="请输入" />
+          </Form.Item>
+        </>
+      ) : null}
 
       <Form.Item
         label="昵称"
@@ -175,6 +174,20 @@ export default function FormModal(props: IProps) {
           fileList={avatar_imgs_list}
           action="/image/upload/user"
         />
+      </Form.Item>
+
+      <Form.Item
+        label="角色"
+        name="role"
+        rules={[
+          {
+            required: true,
+            message: "请选择",
+          },
+        ]}
+        initialValue={modalInfo?.role}
+      >
+        <Select placeholder="请选择" options={ROLE_LIST} />
       </Form.Item>
     </Modal>
   )

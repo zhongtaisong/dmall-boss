@@ -12,6 +12,7 @@ const initialState: ISliceState = {
     total: 0,
     isGoodsModalVisible: false,
     modalInfo: {},
+    dmActions: [],
 }
 
 export const goodsListSlice = createAppSlice({
