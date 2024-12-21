@@ -20,6 +20,10 @@ $axios.interceptors.request.use(
                     "Authorization": `Bearer ${token}`,
                 })
             }
+
+            Object.assign(headers, {
+                terminal: "BOSS",
+            })
         }
 
         return config;
