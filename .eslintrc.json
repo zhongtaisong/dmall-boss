@@ -26,7 +26,8 @@
           }
         ]
       }
-    ]
+    ],
+    "react-hooks/exhaustive-deps": "off"
   },
   "overrides": [
     { "files": ["*.{c,m,}{t,j}s", "*.{t,j}sx"] },

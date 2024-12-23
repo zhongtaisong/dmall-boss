@@ -1,32 +1,34 @@
-import { useEffect, useRef } from "react"
-import { Button, Form, Input, Popconfirm, Space, Table } from "antd"
+import { useEffect, useRef } from "react";
+import { Button, Form, Input, Popconfirm, Space, Table } from "antd";
 import {
   addGoodsReq,
   deleteGoodsReq,
   queryGoodsListReq,
   updateGoodsReq,
-} from "./api"
-import { getStateFn, onToggleModalChange, onUpdateStateChange } from "./slice"
-import { useAppDispatch, useAppSelector } from "@app/hooks"
-import { PAGE_SIZE } from "@axios/config"
-import type { IAddGoodsParams, IParams, IRow } from "./types"
-import GoodsModal from "./components/goods-modal"
-import "./index.less"
+} from "./api";
+import { getStateFn, onToggleModalChange, onUpdateStateChange } from "./slice";
+import { useAppDispatch, useAppSelector } from "@app/hooks";
+import { PAGE_SIZE } from "@axios/config";
+import type { IAddGoodsParams, IParams, IRow } from "./types";
+import GoodsModal from "./components/goods-modal";
+import { useTranslation } from "react-i18next";
+import "./index.less";
 
 const GoodsList: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const { modalInfo, searchParams, dataSource, total, dmActions, } =
-    useAppSelector(getStateFn)
-  const isUseEffect = useRef(false)
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const { modalInfo, searchParams, dataSource, total, dmActions } =
+    useAppSelector(getStateFn);
+  const isUseEffect = useRef(false);
 
   useEffect(() => {
-    if (isUseEffect?.current) return
+    if (isUseEffect?.current) return;
 
-    isUseEffect.current = true
+    isUseEffect.current = true;
 
     /** 查询列表 - 操作 */
-    queryGoodsListFn()
-  })
+    queryGoodsListFn();
+  });
 
   /**
    * 查询列表 - 操作
@@ -36,15 +38,15 @@ const GoodsList: React.FC = () => {
     const params_new = {
       ...searchParams,
       ...params,
-    }
-    const result = await queryGoodsListReq(params_new)
+    };
+    const result = await queryGoodsListReq(params_new);
 
-    const list = result?.content || []
-    const pageNum = params_new?.pageNum
+    const list = result?.content || [];
+    const pageNum = params_new?.pageNum;
     if (!list?.length && pageNum > 0) {
       return queryGoodsListFn({
         pageNum: pageNum - 1,
-      })
+      });
     }
 
     dispatch(
@@ -54,55 +56,55 @@ const GoodsList: React.FC = () => {
         { key: "searchParams", value: params_new || {} },
         { key: "dmActions", value: result?.actions || [] },
       ]),
-    )
-  }
+    );
+  };
 
   /**
    * 删除
    * @param row
    */
   const onDeleteClick = async (row: IRow) => {
-    if (!row || !Object.keys(row).length) return
+    if (!row || !Object.keys(row).length) return;
 
-    const { id } = row
-    if (!id) return
+    const { id } = row;
+    if (!id) return;
 
-    const result = await deleteGoodsReq(id)
-    if (!result) return
+    const result = await deleteGoodsReq(id);
+    if (!result) return;
 
     /** 查询列表 - 操作 */
-    queryGoodsListFn()
-  }
+    queryGoodsListFn();
+  };
 
   /**
    * 新增、编辑 - 操作
    * @param row
    */
   const onUpdateClick = async (params: IAddGoodsParams) => {
-    if (!params || !Object.keys(params).length) return
+    if (!params || !Object.keys(params).length) return;
 
-    const { id } = modalInfo || {}
+    const { id } = modalInfo || {};
 
-    let result = false
+    let result = false;
     if (!id) {
-      result = await addGoodsReq(params)
+      result = await addGoodsReq(params);
     } else {
       result = await updateGoodsReq({
         ...params,
         id,
-      })
+      });
     }
-    if (!result) return
+    if (!result) return;
 
     dispatch(
       onToggleModalChange({
         key: "isGoodsModalVisible",
         value: false,
       }),
-    )
+    );
     /** 查询列表 - 操作 */
-    queryGoodsListFn()
-  }
+    queryGoodsListFn();
+  };
 
   return (
     <div className="dm_goods_list">
@@ -117,16 +119,17 @@ const GoodsList: React.FC = () => {
             queryGoodsListFn({
               pageNum: 0,
               ...values,
-            })
+            });
           }}
+          labelWrap
         >
-          <Form.Item label="商品名称" name="brand_name">
-            <Input placeholder="请输入" />
+          <Form.Item label={t(`商品名称`)} name="brand_name">
+            <Input placeholder={t(`请输入`)} />
           </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              搜索
+              {t(`搜索`)}
             </Button>
           </Form.Item>
         </Form>
@@ -142,9 +145,9 @@ const GoodsList: React.FC = () => {
                 }),
               )
             }
-            disabled={ !dmActions.includes("add") }
+            disabled={!dmActions.includes("add")}
           >
-            新增商品
+            {t(`新增商品`)}
           </Button>
         </Space>
 
@@ -162,7 +165,7 @@ const GoodsList: React.FC = () => {
               queryGoodsListFn({
                 pageNum: num - 1,
                 pageSize: size,
-              })
+              });
             },
           }}
           rowKey="id"
@@ -171,45 +174,45 @@ const GoodsList: React.FC = () => {
           <Table.Column
             key="index"
             dataIndex="index"
-            title="序号"
+            title={t(`序号`)}
             render={(_text, _row, index) => index + 1}
             width={80}
           />
 
           <Table.Column
             key="goods_name"
-            title="商品名称"
+            title={t(`商品名称`)}
             dataIndex="goods_name"
             render={text => text || "-"}
           />
 
           <Table.Column
             key="goods_price"
-            title="价格"
+            title={t(`价格`)}
             dataIndex="goods_price"
             render={text => text || "-"}
-            width={ 120 }
+            width={120}
           />
 
           <Table.Column
             key="createdAt"
-            title="创建时间"
+            title={t(`创建时间`)}
             dataIndex="createdAt"
             render={text => text || "-"}
-            width={ 160 }
+            width={160}
           />
 
           <Table.Column
             key="updatedAt"
-            title="更新时间"
+            title={t(`更新时间`)}
             dataIndex="updatedAt"
             render={text => text || "-"}
-            width={ 160 }
+            width={160}
           />
 
           <Table.Column
             key="action"
-            title="操作"
+            title={t(`操作`)}
             dataIndex="action"
             render={(_text, row: IRow, _index) => {
               return (
@@ -227,18 +230,20 @@ const GoodsList: React.FC = () => {
                     }
                     disabled={!dmActions?.includes?.("upate")}
                   >
-                    编辑
+                    {t(`编辑`)}
                   </Button>
                   <Popconfirm
-                    title="提示"
-                    description="确定删除？"
+                    title={t(`提示`)}
+                    description={t(`确定删除？`)}
                     onConfirm={() => onDeleteClick(row)}
                     disabled={!dmActions?.includes?.("delete")}
                   >
-                    <Button disabled={!dmActions?.includes?.("delete")}>删除</Button>
+                    <Button disabled={!dmActions?.includes?.("delete")}>
+                      {t(`删除`)}
+                    </Button>
                   </Popconfirm>
                 </Space>
-              )
+              );
             }}
             width={180}
           />
@@ -247,7 +252,7 @@ const GoodsList: React.FC = () => {
 
       <GoodsModal onOKClick={values => onUpdateClick?.(values)} />
     </div>
-  )
-}
+  );
+};
 
-export default GoodsList
+export default GoodsList;

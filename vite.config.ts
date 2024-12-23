@@ -23,6 +23,7 @@ export default defineConfig({
       "@pages": path.join(__dirname, "src/pages"),
       "@axios": path.join(__dirname, "src/axios"),
       "@components": path.join(__dirname, "src/components"),
+      "@i18n": path.join(__dirname, "src/i18n"),
     },
   },
 })

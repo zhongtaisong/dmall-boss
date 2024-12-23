@@ -8,6 +8,7 @@ export interface IEventBus {
         delta?: number;
     };
     queryUserInfo: unknown;
+    onLanguageChange: IObject;
 }
 
 // @ts-ignore

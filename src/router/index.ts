@@ -5,6 +5,7 @@ import UserList from "./../pages/user-list"
 import Login from "./../pages/login"
 import Register from "./../pages/register"
 import ChangePassword from "./../pages/change-password"
+import I18n from "./../pages/i18n"
 
 export const ROUTE_LIST = [
   {
@@ -35,6 +36,12 @@ export const ROUTE_LIST = [
     title: "修改密码",
     path: "/change-password",
     element: ChangePassword,
+  },
+  {
+    title: "多语言维护",
+    path: "/i18n",
+    element: I18n,
+    isMenu: true,
   },
 ]
 

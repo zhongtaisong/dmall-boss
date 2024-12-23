@@ -27,3 +27,9 @@ export const queryRoleInfoFn = (value: "0" | "1" | "2") => {
   const info = ROLE_LIST_ALL.find(item => item?.value === value);
   return info;
 }
+
+export const LANGUAGE_LIST = [
+  { key: 'zh', label: '中文', },
+  { key: 'en', label: 'English', },
+  { key: 'ru', label: 'Русский язык', },
+];
