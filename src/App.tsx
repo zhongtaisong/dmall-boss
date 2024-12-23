@@ -82,7 +82,7 @@ const App: React.FC = () => {
     let menuItems_new = lodash.cloneDeep(MENU_LIST)
     if (user_info?.role !== "0") {
       menuItems_new = menuItems_new.filter(
-        item => !["/i18n"].includes(item?.key),
+        item => !["/i18n-page"].includes(item?.key),
       )
     }
 

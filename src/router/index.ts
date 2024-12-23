@@ -5,7 +5,7 @@ import UserList from "./../pages/user-list"
 import Login from "./../pages/login"
 import Register from "./../pages/register"
 import ChangePassword from "./../pages/change-password"
-import I18n from "./../pages/i18n"
+import I18nPage from "../pages/i18n-page"
 
 export const ROUTE_LIST = [
   {
@@ -39,8 +39,8 @@ export const ROUTE_LIST = [
   },
   {
     title: "多语言维护",
-    path: "/i18n",
-    element: I18n,
+    path: "/i18n-page",
+    element: I18nPage,
     isMenu: true,
   },
 ]
