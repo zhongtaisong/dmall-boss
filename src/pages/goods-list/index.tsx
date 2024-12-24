@@ -157,7 +157,7 @@ const GoodsList: React.FC = () => {
             current: searchParams?.pageNum + 1,
             pageSize: searchParams?.pageSize || PAGE_SIZE,
             total: total ?? 0,
-            showTotal: n => `共 ${n} 条`,
+            showTotal: n => t('共 {{total}} 条', { total: n }),
             showSizeChanger: true,
             showQuickJumper: true,
             onChange: (num, size) => {

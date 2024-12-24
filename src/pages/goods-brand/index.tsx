@@ -153,7 +153,7 @@ const GoodsBrand: React.FC = () => {
             current: state?.params?.pageNum + 1,
             pageSize: state?.params?.pageSize || PAGE_SIZE,
             total: state?.total ?? 0,
-            showTotal: n => `共 ${n} 条`,
+            showTotal: n => t('共 {{total}} 条', { total: n }),
             showSizeChanger: true,
             showQuickJumper: true,
             onChange: (num, size) => {

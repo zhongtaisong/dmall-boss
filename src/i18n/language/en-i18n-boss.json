@@ -1,4 +1,5 @@
 {
+  "共 {{total}} 条": "A total of {{total}} items",
   "请选择": "Please choose",
   "密码": "password",
   "确认密码": "Confirm password",
