@@ -143,7 +143,7 @@ const App: React.FC = () => {
                   },
                 }}
                 arrow
-                placement="topRight"
+                placement="bottomRight"
               >
                 <Space className="dmall_app__header--right__info">
                   <span>{languageInfo?.label}</span>
@@ -170,7 +170,7 @@ const App: React.FC = () => {
                   },
                 }}
                 arrow
-                placement="topRight"
+                placement="bottomRight"
               >
                 <Space className="dmall_app__header--right__info">
                   {userInfo?.avatar ? (
