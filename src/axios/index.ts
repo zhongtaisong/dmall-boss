@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AUTH_CODE, SERVICE_URL, } from "./config";
-import { getUserInfoFn, onNavigateToLoginClick } from "@utils/common";
+import { getUserInfoFn, onNavigateToLoginClick, getCurrentLanguageInfoFn, } from "@utils/common";
 
 /** 创建axios实例 */
 const $axios = axios.create({
@@ -23,6 +23,7 @@ $axios.interceptors.request.use(
 
             Object.assign(headers, {
                 terminal: "BOSS",
+                lang: getCurrentLanguageInfoFn()?.key || "",
             })
         }
 
