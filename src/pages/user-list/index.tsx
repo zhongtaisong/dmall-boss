@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react";
 import {
   Button,
   Form,
@@ -9,36 +9,39 @@ import {
   Image,
   Modal,
   Select,
-} from "antd"
+} from "antd";
 import {
   addUserReq,
   deleteUserReq,
   queryUserListReq,
   updateUserReq,
   resetUserPasswordReq,
-} from "./api"
-import { getStateFn, onToggleModalChange, onUpdateStateChange } from "./slice"
-import { useAppDispatch, useAppSelector } from "@app/hooks"
-import { PAGE_SIZE } from "@axios/config"
-import type { IAddUserParams, IParams, IRow } from "./types"
-import FormModal from "./components/form-modal"
-import "./index.less"
-import { queryRoleInfoFn, ROLE_LIST_ALL } from "@utils/config"
+} from "./api";
+import { getStateFn, onToggleModalChange, onUpdateStateChange } from "./slice";
+import { useAppDispatch, useAppSelector } from "@app/hooks";
+import { PAGE_SIZE } from "@axios/config";
+import type { IAddUserParams, IParams, IRow } from "./types";
+import FormModal from "./components/form-modal";
+import { useTranslation } from "react-i18next";
+import "./index.less";
+import { queryRoleInfoFn, ROLE_LIST_ALL } from "@utils/config";
+import { handleListFn } from "@utils/common";
 
 const UserList: React.FC = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const { modalInfo, searchParams, dataSource, total, dmActions } =
-    useAppSelector(getStateFn)
-  const isUseEffect = useRef(false)
+    useAppSelector(getStateFn);
+  const isUseEffect = useRef(false);
 
   useEffect(() => {
-    if (isUseEffect?.current) return
+    if (isUseEffect?.current) return;
 
-    isUseEffect.current = true
+    isUseEffect.current = true;
 
     /** 查询列表 - 操作 */
-    queryUserListFn()
-  })
+    queryUserListFn();
+  });
 
   /**
    * 查询列表 - 操作
@@ -48,15 +51,15 @@ const UserList: React.FC = () => {
     const params_new = {
       ...searchParams,
       ...params,
-    }
-    const result = await queryUserListReq(params_new)
+    };
+    const result = await queryUserListReq(params_new);
 
-    const list = result?.content || []
-    const pageNum = params_new?.pageNum
+    const list = result?.content || [];
+    const pageNum = params_new?.pageNum;
     if (!list?.length && pageNum > 0) {
       return queryUserListFn({
         pageNum: pageNum - 1,
-      })
+      });
     }
 
     dispatch(
@@ -66,55 +69,55 @@ const UserList: React.FC = () => {
         { key: "searchParams", value: params_new || {} },
         { key: "dmActions", value: result?.actions || [] },
       ]),
-    )
-  }
+    );
+  };
 
   /**
    * 删除
    * @param row
    */
   const onDeleteClick = async (row: IRow) => {
-    if (!row || !Object.keys(row).length) return
+    if (!row || !Object.keys(row).length) return;
 
-    const { id } = row
-    if (!id) return
+    const { id } = row;
+    if (!id) return;
 
-    const result = await deleteUserReq(id)
-    if (!result) return
+    const result = await deleteUserReq(id);
+    if (!result) return;
 
     /** 查询列表 - 操作 */
-    queryUserListFn()
-  }
+    queryUserListFn();
+  };
 
   /**
    * 新增、编辑 - 操作
    * @param row
    */
   const onUpdateClick = async (params: IAddUserParams) => {
-    if (!params || !Object.keys(params).length) return
+    if (!params || !Object.keys(params).length) return;
 
-    const { id } = modalInfo || {}
+    const { id } = modalInfo || {};
 
-    let result = false
+    let result = false;
     if (!id) {
-      result = await addUserReq(params)
+      result = await addUserReq(params);
     } else {
       result = await updateUserReq({
         ...params,
         id,
-      })
+      });
     }
-    if (!result) return
+    if (!result) return;
 
     dispatch(
       onToggleModalChange({
         key: "isVisible",
         value: false,
       }),
-    )
+    );
     /** 查询列表 - 操作 */
-    queryUserListFn()
-  }
+    queryUserListFn();
+  };
 
   /**
    * 重置用户密码 - 操作
@@ -122,16 +125,16 @@ const UserList: React.FC = () => {
    * @returns
    */
   const onResetPasswordClick = async (params: IObject) => {
-    if (!params || !Object.keys(params).length) return
+    if (!params || !Object.keys(params).length) return;
 
-    const result = await resetUserPasswordReq(params)
-    if (!result) return
+    const result = await resetUserPasswordReq(params);
+    if (!result) return;
 
     Modal.info({
-      title: "提示",
-      content: `重置后的用户密码为：${result}`,
-    })
-  }
+      title: t(`提示`),
+      content: `${t(`重置后的用户密码为`)}：${result}`,
+    });
+  };
 
   return (
     <div className="dm_user_list">
@@ -144,24 +147,27 @@ const UserList: React.FC = () => {
             queryUserListFn({
               pageNum: 0,
               ...values,
-            })
+            });
           }}
         >
-          <Form.Item label="手机号码" name="phone">
-            <Input placeholder="请输入" />
+          <Form.Item label={t(`手机号码`)} name="phone">
+            <Input placeholder={t(`请输入`)} />
           </Form.Item>
 
-          <Form.Item label="角色" name="role" initialValue="">
+          <Form.Item label={t(`角色`)} name="role" initialValue="">
             <Select
-              placeholder="请选择"
-              options={[{ value: "", label: "全部" }, ...ROLE_LIST_ALL]}
+              placeholder={t(`请选择`)}
+              options={[
+                { value: "", label: t(`全部`) },
+                ...handleListFn(ROLE_LIST_ALL, "label", t),
+              ]}
               style={{ width: 180 }}
             />
           </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              搜索
+              {t(`搜索`)}
             </Button>
           </Form.Item>
         </Form>
@@ -179,7 +185,7 @@ const UserList: React.FC = () => {
             }
             disabled={!dmActions.includes("add")}
           >
-            新增用户
+            {t(`新增用户`)}
           </Button>
         </Space>
 
@@ -189,7 +195,7 @@ const UserList: React.FC = () => {
             current: searchParams?.pageNum + 1,
             pageSize: searchParams?.pageSize || PAGE_SIZE,
             total: total ?? 0,
-            showTotal: n => `共 ${n} 条`,
+            showTotal: n => t('共 {{total}} 条', { total: n }),
             showSizeChanger: true,
             showQuickJumper: true,
             onChange: (num, size) => {
@@ -197,7 +203,7 @@ const UserList: React.FC = () => {
               queryUserListFn({
                 pageNum: num - 1,
                 pageSize: size,
-              })
+              });
             },
           }}
           rowKey="id"
@@ -206,28 +212,28 @@ const UserList: React.FC = () => {
           <Table.Column
             key="index"
             dataIndex="index"
-            title="序号"
+            title={t(`序号`)}
             render={(_text, _row, index) => index + 1}
             width={80}
           />
 
           <Table.Column
             key="phone"
-            title="手机号码"
+            title={t(`手机号码`)}
             dataIndex="phone"
             render={text => text || "-"}
           />
 
           <Table.Column
             key="role"
-            title="角色"
+            title={t(`角色`)}
             dataIndex="role"
             render={text => queryRoleInfoFn(text)?.label || "-"}
           />
 
           <Table.Column
             key="nickname"
-            title="昵称"
+            title={t(`昵称`)}
             dataIndex="nickname"
             render={text => text || "-"}
             width="20%"
@@ -235,20 +241,20 @@ const UserList: React.FC = () => {
 
           <Table.Column
             key="avatar"
-            title="头像"
+            title={t(`头像`)}
             dataIndex="avatar"
             render={text => {
-              const url = text?.[0] || ""
-              if (!url) return "-"
+              const url = text?.[0] || "";
+              if (!url) return "-";
 
-              return <Image src={url} />
+              return <Image src={url} />;
             }}
             width={100}
           />
 
           <Table.Column
             key="createdAt"
-            title="创建时间"
+            title={t(`创建时间`)}
             dataIndex="createdAt"
             render={text => text || "-"}
             width="10%"
@@ -256,7 +262,7 @@ const UserList: React.FC = () => {
 
           <Table.Column
             key="updatedAt"
-            title="更新时间"
+            title={t(`更新时间`)}
             dataIndex="updatedAt"
             render={text => text || "-"}
             width="10%"
@@ -264,11 +270,11 @@ const UserList: React.FC = () => {
 
           <Table.Column
             key="action"
-            title="操作"
+            title={t(`操作`)}
             dataIndex="action"
             render={(_text, row: IRow, _index) => {
               return (
-                <Space>
+                <Space wrap>
                   <Button
                     type="primary"
                     onClick={() =>
@@ -282,7 +288,7 @@ const UserList: React.FC = () => {
                     }
                     disabled={!dmActions?.includes?.("upate") || !row?.isAction}
                   >
-                    编辑
+                    {t(`编辑`)}
                   </Button>
 
                   <Button
@@ -292,12 +298,12 @@ const UserList: React.FC = () => {
                       !dmActions?.includes?.("reset_password") || !row?.isAction
                     }
                   >
-                    重置用户密码
+                    {t(`重置用户密码`)}
                   </Button>
 
                   <Popconfirm
-                    title="提示"
-                    description="确定删除？"
+                    title={t(`提示`)}
+                    description={t(`确定删除？`)}
                     onConfirm={() => onDeleteClick(row)}
                     disabled={
                       !dmActions?.includes?.("delete") || !row?.isAction
@@ -308,11 +314,11 @@ const UserList: React.FC = () => {
                         !dmActions?.includes?.("delete") || !row?.isAction
                       }
                     >
-                      删除
+                      {t(`删除`)}
                     </Button>
                   </Popconfirm>
                 </Space>
-              )
+              );
             }}
             width={296}
           />
@@ -321,7 +327,7 @@ const UserList: React.FC = () => {
 
       <FormModal onOKClick={values => onUpdateClick?.(values)} />
     </div>
-  )
-}
+  );
+};
 
-export default UserList
+export default UserList;

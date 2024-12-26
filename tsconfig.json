@@ -24,7 +24,8 @@
       "@pages/*": ["src/pages/*"],
       "@axios": ["src/axios"],
       "@axios/*": ["src/axios/*"],
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@i18n/*": ["src/i18n/*"]
     }
   },
   "references": [{ "path": "./tsconfig.node.json" }],
