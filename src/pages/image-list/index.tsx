@@ -1,8 +1,5 @@
 import { useEffect, useRef } from "react";
-import {
-  Image,
-  Empty,
-} from "antd";
+import { Empty, } from "antd";
 import {
   queryImageListReq,
 } from "./api";
@@ -10,6 +7,7 @@ import { getStateFn, onUpdateStateChange } from "./slice";
 import { useAppDispatch, useAppSelector } from "@app/hooks";
 import { useTranslation } from "react-i18next";
 import "./index.less";
+import LazyLoadImage from "@components/lazy-load-image";
 
 const ImageList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -70,7 +68,8 @@ const ImageList: React.FC = () => {
                 key={item.id}
                 className="dm_image_list__body--item"
               >
-                <Image src={item.url} width="100%" />
+                <LazyLoadImage src={item.url} width="100%" />
+
                 <ul>
                   <li>
                     <div>{ t(`使用状态`) }：</div>
