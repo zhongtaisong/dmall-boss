@@ -1,4 +1,10 @@
 {
+  "上传时间": "Upload time",
+  "未使用": "not used",
+  "使用中": "in use",
+  "使用状态": "Usage status",
+  "暂无数据": "No data available at the moment",
+  "图片列表": "Picture List",
   "共 {{total}} 条": "A total of {{total}} items",
   "请选择": "Please choose",
   "密码": "password",

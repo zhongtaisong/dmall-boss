@@ -2,6 +2,7 @@ import Home from "./../pages/home"
 import GoodsBrand from "./../pages/goods-brand"
 import GoodsList from "./../pages/goods-list"
 import UserList from "./../pages/user-list"
+import ImageList from "./../pages/image-list"
 import Login from "./../pages/login"
 import Register from "./../pages/register"
 import ChangePassword from "./../pages/change-password"
@@ -30,6 +31,12 @@ export const ROUTE_LIST = [
     title: "用户列表",
     path: "/user-list",
     element: UserList,
+    isMenu: true,
+  },
+  {
+    title: "图片列表",
+    path: "/image-list",
+    element: ImageList,
     isMenu: true,
   },
   {
