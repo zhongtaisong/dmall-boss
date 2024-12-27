@@ -142,7 +142,7 @@ export default function GoodsModal(props: IProps) {
         initialValue={goods_imgs_list}
       >
         <DmUpload
-          name="goodsImgs"
+          name="goods"
           isForm
           maxCount={6}
           fileList={goods_imgs_list}
