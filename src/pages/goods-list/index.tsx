@@ -123,7 +123,7 @@ const GoodsList: React.FC = () => {
           }}
           labelWrap
         >
-          <Form.Item label={t(`商品名称`)} name="brand_name">
+          <Form.Item label={t(`商品名称`)} name="goods_name">
             <Input placeholder={t(`请输入`)} />
           </Form.Item>
 

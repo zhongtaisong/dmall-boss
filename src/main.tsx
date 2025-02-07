@@ -16,6 +16,8 @@ import "./index.less";
 import { getCurrentLanguageInfoFn } from "@utils/common";
 import "./i18n";
 import { useTranslation } from "react-i18next";
+import { ActivationKeepAlive } from "@components/keep-alive/activation-keep-alive";
+import { AliveScope } from "@components/keep-alive/alive-scope";
 
 const container = document.getElementById("root");
 
@@ -69,7 +71,9 @@ const RootComponent: React.FC = () => {
                     <span>{t(item?.title)}</span>
                   </div>
 
-                  <item.element />
+                  <ActivationKeepAlive id={ item?.path }>
+                    <item.element />
+                  </ActivationKeepAlive>
                 </div>
               }
             />
@@ -111,9 +115,11 @@ const MainComponent: React.FC = () => {
 
   return (
     <ConfigProvider locale={getLocale}>
-      <BrowserRouter>
-        <RootComponent />
-      </BrowserRouter>
+      <AliveScope>
+        <BrowserRouter>
+          <RootComponent />
+        </BrowserRouter>
+      </AliveScope>
     </ConfigProvider>
   );
 };
